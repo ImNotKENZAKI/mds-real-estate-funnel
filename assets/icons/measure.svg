@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Pipeline visibility</title>
+  <path d="M9 39V25M19 39V19M29 39V27M39 39V10" stroke="#293129" stroke-width="2" stroke-linecap="round"/>
+  <path d="m9 20 10-6 10 6L39 8" stroke="#7A9271" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="19" cy="14" r="3" fill="#C6A96B"/>
+</svg>

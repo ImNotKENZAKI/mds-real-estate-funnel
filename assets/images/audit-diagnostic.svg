@@ -1,0 +1,16 @@
+<svg width="900" height="600" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="600" rx="28" fill="#FAF8F3"/>
+  <rect x="70" y="70" width="760" height="460" rx="22" fill="white" stroke="#DFE4EC"/>
+  <text x="110" y="125" fill="#08152F" font-family="Arial" font-size="16" font-weight="700">LEAD SYSTEM DIAGNOSTIC</text>
+  <text x="110" y="154" fill="#6E7C91" font-family="Arial" font-size="12">A practical review of the path from inquiry to next step</text>
+  <g font-family="Arial" font-size="14">
+    <rect x="110" y="205" width="165" height="88" rx="14" fill="#F3F7FD"/><text x="130" y="235" fill="#0A67F2" font-weight="700">01 CAPTURE</text><text x="130" y="264" fill="#08152F">Where do leads enter?</text>
+    <rect x="305" y="205" width="165" height="88" rx="14" fill="#F3F7FD"/><text x="325" y="235" fill="#0A67F2" font-weight="700">02 RESPONSE</text><text x="325" y="264" fill="#08152F">How fast is follow-up?</text>
+    <rect x="500" y="205" width="165" height="88" rx="14" fill="#F3F7FD"/><text x="520" y="235" fill="#0A67F2" font-weight="700">03 ROUTING</text><text x="520" y="264" fill="#08152F">Who owns the next step?</text>
+    <rect x="695" y="205" width="95" height="88" rx="14" fill="#08152F"/><text x="715" y="235" fill="#D3B574" font-weight="700">04</text><text x="715" y="264" fill="white">BOOK</text>
+  </g>
+  <path d="M190 330H710" stroke="#D8DFE8" stroke-width="2"/>
+  <g fill="#0A67F2"><circle cx="190" cy="330" r="7"/><circle cx="365" cy="330" r="7"/><circle cx="540" cy="330" r="7"/><circle cx="710" cy="330" r="7"/></g>
+  <g font-family="Arial" font-size="12" fill="#6E7C91"><text x="115" y="390">Lead source</text><text x="115" y="425">CRM organization</text><text x="115" y="460">Follow-up workflow</text><text x="445" y="390">Qualification logic</text><text x="445" y="425">Booking path</text><text x="445" y="460">Visibility + ownership</text></g>
+  <g stroke="#B5C0D0"><path d="M250 386H370M250 421H370M250 456H370M590 386H750M590 421H750M590 456H750"/></g>
+</svg>

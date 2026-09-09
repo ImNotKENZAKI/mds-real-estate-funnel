@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Lead capture</title>
+  <path d="M8 22 24 9l16 13" stroke="#293129" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 20v18h24V20" stroke="#293129" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19 38V27h10v11" stroke="#7A9271" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="36" cy="13" r="4" fill="#C6A96B"/>
+  <path d="m34.2 13 1.2 1.2 2.5-2.6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

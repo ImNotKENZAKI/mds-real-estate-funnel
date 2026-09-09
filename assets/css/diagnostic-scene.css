@@ -1,0 +1,383 @@
+/* Step 2 only. V3 shared tokens, Step 1 and Thank You remain untouched. */
+.diagnostic-chapter {
+  background: var(--ivory);
+}
+.diagnostic-chapter .chapter-main {
+  padding-top: 30px;
+  padding-bottom: 64px;
+}
+.diagnostic-chapter .chapter-progress {
+  gap: 0;
+}
+.diagnostic-chapter .chapter-progress li {
+  padding: 16px 20px 0 0;
+}
+.diagnostic-chapter .chapter-progress li + li {
+  padding-left: 24px;
+}
+.diagnostic-chapter .chapter-progress li::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--ink);
+}
+.diagnostic-chapter .chapter-progress .is-complete::after {
+  background: var(--gold);
+}
+.diagnostic-chapter .chapter-progress .is-current::after {
+  background: var(--blue);
+}
+.diagnostic-chapter .chapter-progress li::before {
+  animation: none;
+}
+.diagnostic-chapter.has-scene-motion .chapter-progress .is-complete::before {
+  animation: scene-progress .35s ease-out both;
+}
+.diagnostic-chapter.has-scene-motion .chapter-progress .is-current::before {
+  animation: scene-progress .4s .3s ease-out both;
+}
+.diagnostic-chapter .diagnostic-intro {
+  display: block;
+  margin: 38px 0 32px;
+}
+.diagnostic-chapter .diagnostic-intro .eyebrow {
+  margin-bottom: 14px;
+}
+.diagnostic-chapter .diagnostic-intro h1 {
+  max-width: 900px;
+  margin: 0 0 18px;
+  font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.12;
+}
+.diagnostic-chapter .diagnostic-intro .chapter-lede {
+  max-width: 760px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* One architectural environment; the form occupies its foreground. */
+.diagnostic-scene {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: stretch;
+  isolation: isolate;
+}
+.scene-environment {
+  position: relative;
+  grid-column: 1 / 9;
+  grid-row: 1;
+  align-self: start;
+  min-height: 820px;
+  overflow: hidden;
+  background: var(--ink);
+  color: white;
+}
+.scene-property {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 540px;
+  overflow: hidden;
+  background: var(--ink);
+}
+.scene-property img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 100% 50%;
+  transform: scale(var(--scene-scale, 1));
+  transform-origin: 69% 52%;
+}
+.scene-property::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #07152fcf, #07152f35 60%, #07152f00),
+    linear-gradient(0deg, var(--ink), #07152f10 70%, #07152f55);
+  pointer-events: none;
+}
+.scene-frame {
+  position: absolute;
+  inset: 22px;
+  border: 1px solid #ffffff1c;
+  border-top-color: #c6a96b80;
+  pointer-events: none;
+}
+.scene-caption {
+  position: relative;
+  z-index: 2;
+  padding: 38px 38px 0;
+}
+.scene-caption .chapter-kicker {
+  color: #e0c48e;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+.scene-caption h2 {
+  font-size: clamp(1.8rem, 2.5vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0;
+  max-width: 400px;
+}
+.scene-origin-label {
+  margin: 18px 0 0;
+  color: #d6e1ef;
+  font-size: 13px;
+}
+.scene-origin-label span {
+  color: #e0c48e;
+  margin-left: 10px;
+}
+.scene-system {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+.scene-wire, .scene-trace {
+  fill: none;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.scene-wire {
+  stroke: #becde273;
+}
+.scene-trace {
+  stroke: var(--blue);
+  stroke-width: 2.5;
+}
+.scene-origin {
+  fill: var(--ink);
+  stroke: #c6a96b;
+  stroke-width: 1.5;
+}
+.scene-signal {
+  fill: var(--blue);
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+.scene-signal-label {
+  position: absolute;
+  left: var(--signal-label-x, 65%);
+  top: var(--signal-label-y, 260px);
+  z-index: 2;
+  font-size: 10px;
+  letter-spacing: .13em;
+  color: #fff;
+  pointer-events: none;
+}
+.scene-stages {
+  position: relative;
+  z-index: 3;
+  list-style: none;
+  margin: 142px 0 0;
+  padding: 0 34px;
+  width: 70%;
+}
+.scene-step {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: start;
+  gap: 18px;
+  width: 100%;
+  min-height: 91px;
+  padding: 15px 0;
+  border: 0;
+  color: #fff;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.scene-node {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #bac8dc;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #dae5f3;
+  font-size: 11px;
+  font-weight: 700;
+}
+.scene-step strong {
+  display: block;
+  padding-top: 1px;
+  font-size: 20px;
+  line-height: 1.35;
+  letter-spacing: -.025em;
+  font-weight: 600;
+}
+.scene-step small {
+  display: block;
+  margin-top: 6px;
+  color: #c5d3e7;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.scene-step.is-active .scene-node {
+  background: var(--blue);
+  border-color: #8cbaff;
+  color: white;
+}
+.scene-step.is-passed .scene-node {
+  border-color: #70a9ff;
+}
+.has-scene-motion .scene-node {
+  transition: background .25s ease, border-color .25s ease;
+}
+.scene-step:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+.scene-footnote {
+  position: relative;
+  z-index: 2;
+  padding: 18px 38px 32px;
+  width: 70%;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #aebfd7;
+}
+
+/* GHL is isolated in normal flow. No minimum height or animation. */
+.diagnostic-chapter .scene-form {
+  position: relative;
+  z-index: 4;
+  grid-column: 8 / -1;
+  grid-row: 1;
+  align-self: start;
+  margin: 102px 0 40px -18px;
+  padding: 30px 26px 24px;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--gold);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 64px #040d1e26;
+  overflow: visible;
+  transform: none;
+  animation: none;
+}
+.diagnostic-chapter .scene-form::before,
+.diagnostic-chapter .scene-form::after {
+  content: none;
+}
+.diagnostic-chapter .scene-form > .eyebrow {
+  margin: 0 0 14px;
+}
+.diagnostic-chapter .scene-form h2 {
+  max-width: 370px;
+  margin-bottom: 22px;
+  padding-right: 14px;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 600;
+  border-right: 1px solid #c6a96b70;
+}
+.diagnostic-chapter .diagnostic-form-shell {
+  --diagnostic-form-height: 480px;
+  display: block;
+  position: relative;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  background: #fff;
+  overflow: visible;
+  transform: none;
+}
+.diagnostic-chapter .diagnostic-form-shell iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  height: var(--diagnostic-form-height);
+  border: 0;
+  background: white;
+  transform: none;
+  animation: none;
+}
+.diagnostic-chapter .diagnostic-reassurance {
+  margin-top: 14px;
+  padding-top: 12px;
+  font-size: 12px;
+}
+.diagnostic-chapter .chapter-legal {
+  position: relative;
+}
+.diagnostic-chapter .chapter-motion {
+  min-width: 92px;
+}
+.diagnostic-chapter:not(.has-scene-geometry) .scene-system,
+.diagnostic-chapter:not(.has-scene-geometry) .scene-signal-label {
+  visibility: hidden;
+}
+.diagnostic-chapter[data-reduced-motion="true"] .scene-property img {
+  transform: none;
+}
+.diagnostic-chapter[data-reduced-motion="true"] .scene-signal {
+  visibility: hidden;
+}
+@keyframes scene-progress {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+@media (max-width: 1100px) {
+  .scene-caption { padding-inline: 30px; }
+  .scene-stages { padding-inline: 26px; width: 75%; }
+  .scene-footnote { padding-inline: 30px; }
+  .scene-step { gap: 14px; }
+  .scene-step strong { font-size: 19px; }
+  .scene-step small { font-size: 12px; }
+  .diagnostic-chapter .scene-form { margin-left: 0; padding: 26px 20px 22px; }
+  .diagnostic-chapter .scene-form h2 { font-size: 26px; }
+}
+@media (max-width: 900px) {
+  .diagnostic-chapter .diagnostic-intro h1 { max-width: 700px; }
+  .diagnostic-scene { display: block; }
+  .scene-environment { min-height: 0; padding-bottom: 50px; }
+  .scene-property { height: 450px; }
+  .scene-caption h2 { font-size: 32px; }
+  .scene-stages { margin-top: 145px; width: 100%; display: block; padding-right: 38px; }
+  .scene-step { min-height: 100px; }
+  .scene-footnote { padding-bottom: 22px; width: 100%; }
+  .diagnostic-chapter .scene-form { margin: -42px 24px 0; padding: 30px; }
+  .diagnostic-chapter .scene-form h2 { max-width: 420px; font-size: 28px; }
+  .diagnostic-chapter .chapter-main { padding-bottom: 48px; }
+}
+@media (max-width: 620px) {
+  .diagnostic-chapter .chapter-main { padding-top: 26px; }
+  .diagnostic-chapter .chapter-progress li { padding-right: 8px; }
+  .diagnostic-chapter .chapter-progress li + li { padding-left: 12px; }
+  .diagnostic-chapter .diagnostic-intro { margin: 30px 0 26px; }
+  .diagnostic-chapter .diagnostic-intro h1 { font-size: 35px; max-width: 440px; }
+  .diagnostic-chapter .diagnostic-intro .chapter-lede { font-size: 15px; line-height: 1.8; }
+  .scene-caption { padding: 28px 22px 0; }
+  .scene-caption .chapter-kicker { font-size: 10px; margin-bottom: 14px; }
+  .scene-caption h2 { font-size: 27px; }
+  .scene-origin-label { font-size: 12px; margin-top: 14px; }
+  .scene-frame { inset: 12px; }
+  .scene-property { height: 370px; }
+  .scene-stages { display: block; margin-top: 100px; padding: 0 22px; }
+  .scene-step { min-height: 95px; grid-template-columns: 28px 1fr; gap: 16px; }
+  .scene-node { width: 28px; height: 28px; }
+  .scene-step strong { font-size: 19px; }
+  .scene-step small { font-size: 13px; }
+  .scene-footnote { padding: 12px 22px 20px; font-size: 11px; }
+  .scene-environment { padding-bottom: 35px; }
+  .diagnostic-chapter .scene-form { margin: -24px 0 0 10px; padding: 24px 14px 20px; border-radius: 10px; }
+  .diagnostic-chapter .scene-form h2 { font-size: 25px; }
+  .diagnostic-chapter .diagnostic-form-shell { --diagnostic-form-height: 520px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diagnostic-chapter .scene-property img { transform: none; }
+  .diagnostic-chapter .scene-signal { visibility: hidden; }
+}

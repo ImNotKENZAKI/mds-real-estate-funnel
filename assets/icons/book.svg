@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Appointment booking</title>
+  <rect x="8" y="11" width="32" height="29" rx="2" stroke="#293129" stroke-width="2"/>
+  <path d="M8 19h32M16 8v6M32 8v6" stroke="#293129" stroke-width="2" stroke-linecap="round"/>
+  <path d="m17 29 4.2 4L31 23" stroke="#7A9271" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="39" cy="39" r="3.5" fill="#C6A96B"/>
+</svg>

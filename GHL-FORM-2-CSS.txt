@@ -1,0 +1,183 @@
+/* ================================================================
+   MDS REAL ESTATE LEAD AUDIT — STEP 2
+   Use inside HighLevel: Form Builder > Advanced > Custom CSS
+
+   IMPORTANT:
+   - This CSS intentionally DOES NOT style the submit button.
+   - Style the button natively in HighLevel so it cannot turn blank
+     in the hosted preview.
+   - It matches the Step 1 funnel: ivory/white, navy, MDS blue,
+     restrained gold, Manrope.
+   ================================================================ */
+
+:root {
+  --mds-ink: #07152f;
+  --mds-muted: #536174;
+  --mds-blue: #0a67f2;
+  --mds-blue-soft: rgba(10, 103, 242, 0.10);
+  --mds-gold: #c6a96b;
+  --mds-line: rgba(7, 21, 47, 0.13);
+  --mds-paper: #ffffff;
+}
+
+html,
+body {
+  background: transparent !important;
+}
+
+form {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--mds-ink) !important;
+  font-family: "Manrope", Arial, sans-serif !important;
+}
+
+/* Customer-facing question labels */
+label {
+  display: block !important;
+  margin: 0 0 8px !important;
+  color: var(--mds-ink) !important;
+  font-family: "Manrope", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Text/email inputs only. Excludes submit/buttons/checkboxes/hidden. */
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+textarea,
+select {
+  width: 100% !important;
+  min-height: 52px !important;
+  padding: 12px 14px !important;
+  border: 1px solid rgba(7, 21, 47, 0.16) !important;
+  border-radius: 9px !important;
+  background: var(--mds-paper) !important;
+  color: var(--mds-ink) !important;
+  box-shadow: none !important;
+  font-family: "Manrope", Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease,
+    background-color 180ms ease !important;
+}
+
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):hover,
+textarea:hover,
+select:hover {
+  border-color: rgba(7, 21, 47, 0.28) !important;
+}
+
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
+textarea:focus,
+select:focus {
+  border-color: var(--mds-blue) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px var(--mds-blue-soft) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8793a5 !important;
+  opacity: 1 !important;
+}
+
+/* Give each question room without creating a giant form. */
+.form-builder--item,
+.form-builder--item-input,
+.form-field,
+.hl_form-field,
+.hl_formField {
+  margin-bottom: 17px !important;
+}
+
+/* Checkbox / multiselect fallbacks */
+input[type="checkbox"] {
+  width: 17px !important;
+  height: 17px !important;
+  min-height: 17px !important;
+  padding: 0 !important;
+  accent-color: var(--mds-blue) !important;
+}
+
+.multiselect-tag,
+.multi-select-tag,
+.selected-option,
+.option-selected {
+  border: 1px solid rgba(10, 103, 242, 0.20) !important;
+  border-radius: 7px !important;
+  background: rgba(10, 103, 242, 0.07) !important;
+  color: var(--mds-ink) !important;
+  font-family: "Manrope", Arial, sans-serif !important;
+}
+
+/* Validation */
+.hl-error,
+.error-message,
+.field-error,
+.validation-error {
+  margin-top: 6px !important;
+  color: #b63333 !important;
+  font-family: "Manrope", Arial, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: #b63333 !important;
+}
+
+/* Privacy / Terms — same understated link language as the funnel */
+a {
+  color: var(--mds-muted) !important;
+  font-family: "Manrope", Arial, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-decoration-color: rgba(83, 97, 116, 0.55) !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 4px !important;
+}
+
+a:hover {
+  color: var(--mds-blue) !important;
+}
+
+/* Mobile: 16px prevents Safari/Chrome input zoom. */
+@media (max-width: 600px) {
+  label {
+    font-size: 13px !important;
+  }
+
+  input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  textarea,
+  select {
+    min-height: 50px !important;
+    padding: 11px 13px !important;
+    font-size: 16px !important;
+  }
+
+  .form-builder--item,
+  .form-builder--item-input,
+  .form-field,
+  .hl_form-field,
+  .hl_formField {
+    margin-bottom: 15px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input,
+  textarea,
+  select,
+  a {
+    transition: none !important;
+  }
+}

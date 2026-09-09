@@ -1,0 +1,14 @@
+<svg width="840" height="600" viewBox="0 0 840 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="840" height="600" rx="28" fill="#08152F"/>
+  <rect x="64" y="68" width="712" height="464" rx="22" fill="#0E2145" stroke="#294B7C"/>
+  <g font-family="Arial">
+    <text x="100" y="118" fill="#A4B9D6" font-size="13">LIVE LEAD JOURNEY</text>
+    <text x="100" y="153" fill="white" font-size="22" font-weight="700">One inquiry. Clear next steps.</text>
+    <g transform="translate(100 205)"><rect width="210" height="86" rx="15" fill="#132B57"/><circle cx="35" cy="35" r="16" fill="#0A67F2"/><text x="63" y="30" fill="#8FA7C7" font-size="11">NEW INQUIRY</text><text x="63" y="52" fill="white" font-size="14" font-weight="700">Buyer lead received</text><text x="63" y="70" fill="#8FA7C7" font-size="11">Website · 10:42 AM</text></g>
+    <g transform="translate(315 316)"><rect width="210" height="86" rx="15" fill="#132B57"/><circle cx="35" cy="35" r="16" fill="#37A570"/><text x="63" y="30" fill="#8FA7C7" font-size="11">FOLLOW-UP</text><text x="63" y="52" fill="white" font-size="14" font-weight="700">Email sent</text><text x="63" y="70" fill="#8FA7C7" font-size="11">Workflow active</text></g>
+    <g transform="translate(530 205)"><rect width="210" height="86" rx="15" fill="#132B57"/><circle cx="35" cy="35" r="16" fill="#D0B277"/><text x="63" y="30" fill="#8FA7C7" font-size="11">NEXT STEP</text><text x="63" y="52" fill="white" font-size="14" font-weight="700">Audit call booked</text><text x="63" y="70" fill="#8FA7C7" font-size="11">Thursday · 2:00 PM</text></g>
+  </g>
+  <path d="M310 248C370 248 370 355 420 355" stroke="#438CF8" stroke-width="3" stroke-dasharray="5 7"/>
+  <path d="M525 355C585 355 585 248 530 248" stroke="#438CF8" stroke-width="3" stroke-dasharray="5 7"/>
+  <circle cx="420" cy="355" r="5" fill="#62ADFF"/><circle cx="530" cy="248" r="5" fill="#62ADFF"/>
+</svg>
