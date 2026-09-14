@@ -872,3 +872,66 @@ html:has(.audit-chapter[data-reduced-motion="true"]) { scroll-behavior: auto; }
   .received-editorial li{animation:none!important;transition:none!important;transform:none!important}
   .received-path-line{transform:scaleX(1)!important}
 }
+
+/* ========================================================================
+   MDS EMBED INTERACTION HOTFIX — 2026-09-15
+   Keeps decorative layers from sitting above HighLevel iframe controls.
+   No visual redesign: stacking / pointer behavior only.
+   ======================================================================== */
+
+/* Landing / Form 1 */
+.audit::before {
+  pointer-events: none !important;
+}
+.audit__grid,
+.audit-form-shell,
+.audit-form-shell__embed {
+  position: relative;
+  z-index: 2;
+}
+.audit-form-shell,
+.audit-form-shell__embed,
+.audit-form-shell__embed iframe {
+  pointer-events: auto !important;
+}
+.audit-form-shell__embed iframe {
+  position: relative;
+  z-index: 3;
+}
+
+/* Step 2: the left visual intentionally overlaps the form by one grid column.
+   Make the visual canvas transparent to pointer input while preserving the
+   numbered scene buttons as interactive controls. */
+.diagnostic-scene {
+  position: relative;
+}
+.scene-environment {
+  z-index: 1;
+  pointer-events: none;
+}
+.scene-environment .scene-step {
+  pointer-events: auto;
+}
+.diagnostic-chapter .scene-form {
+  z-index: 20 !important;
+  pointer-events: auto !important;
+  isolation: isolate;
+}
+.diagnostic-chapter [data-audit-form-state],
+.diagnostic-chapter .diagnostic-form-shell {
+  position: relative;
+  z-index: 21;
+  pointer-events: auto !important;
+}
+.diagnostic-chapter .diagnostic-form-shell iframe {
+  position: relative;
+  z-index: 22;
+  pointer-events: auto !important;
+}
+
+/* A closed booking layer must never capture clicks from the page below it. */
+.mds-booking-modal:not(.is-open),
+.mds-booking-modal[aria-hidden="true"] {
+  pointer-events: none !important;
+}
+

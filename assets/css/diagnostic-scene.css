@@ -381,3 +381,15 @@
   .diagnostic-chapter .scene-property img { transform: none; }
   .diagnostic-chapter .scene-signal { visibility: hidden; }
 }
+
+/* Interaction safeguard for the overlapping property-to-pipeline composition. */
+.scene-environment { pointer-events:none; z-index:1; }
+.scene-step { pointer-events:auto; }
+.diagnostic-chapter .scene-form { z-index:20; pointer-events:auto; isolation:isolate; }
+.diagnostic-chapter .diagnostic-form-shell,
+.diagnostic-chapter .diagnostic-form-shell iframe {
+  position:relative;
+  z-index:21;
+  pointer-events:auto !important;
+}
+

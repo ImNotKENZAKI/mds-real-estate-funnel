@@ -1,0 +1,41 @@
+MDS Interaction Fix — 2026-09-15
+
+Why this package exists
+-----------------------
+The live HighLevel forms rendered correctly but iframe controls were reported as not clickable.
+This package keeps all current design and animation, and only hardens stacking/pointer behavior.
+
+Changes
+-------
+1. Landing page Form 1 iframe is explicitly pointer-interactive.
+2. Decorative audit background cannot intercept clicks.
+3. Step 2 left visual canvas cannot intercept clicks in the overlapping grid column.
+4. Step 2 scene number buttons remain interactive.
+5. Step 2 GHL iframe is forced above the visual layer.
+6. Closed booking modal cannot intercept clicks.
+7. CSS URLs are cache-busted so GitHub Pages/browser does not reuse the previous stylesheet.
+
+GHL settings remain:
+- Form 1 redirect:
+  https://realestate.marydigisolutions.com/step-2.html
+
+- Form 2 redirect:
+  https://realestate.marydigisolutions.com/step-2.html?audit=complete#book
+
+- Calendar redirect:
+  https://realestate.marydigisolutions.com/thank-you.html
+
+Form 2 field:
+- Keep the new `MDS RE | Biggest Lead Challenges` (Dropdown multiple).
+- In the FORM BUILDER, change its visible Label to:
+  `What are the biggest challenges in your current lead process?`
+- Placeholder:
+  `Select up to 3 challenges`
+- Required: ON
+- The old single-dropdown field can be removed from the form. Delete the old custom field itself
+  only after confirming no workflow/filter/reference still uses it.
+
+Form 1 consent:
+- The visible field label should preferably be `Text Message Consent`, not `Communication Consent`,
+  if the purpose is SMS appointment/audit updates.
+- Keep it optional and unchecked by default.
