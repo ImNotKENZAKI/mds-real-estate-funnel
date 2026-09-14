@@ -39,11 +39,13 @@ The included Custom CSS intentionally avoids the submit button because the prior
 
 ## Redirect
 
-After the thank-you route is deployed:
+Step 2 form submit -> redirect DIRECTLY to:
 
-Step 2 form submit -> redirect to `/real-estate/thank-you/`
+`https://realestate.marydigisolutions.com/step-2.html?audit=complete#book`
 
-Configure the redirect in HighLevel. Do not intercept the form submit in site JavaScript.
+The page reads the `audit=complete` query parameter, changes the right-side card to the Audit Complete state, and opens the Discovery Call calendar modal.
+
+Configure the redirect in HighLevel. Do not intercept the hosted form's submit event from the parent page.
 
 ## Current Step 2 form
 

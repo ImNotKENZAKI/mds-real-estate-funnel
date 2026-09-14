@@ -11,21 +11,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css?v=audit-chapters-3">
   <link rel="stylesheet" href="assets/css/diagnostic-scene.css?v=1">
+  <link rel="stylesheet" href="assets/css/booking-flow.css?v=2">
   <script src="assets/js/diagnostic-scene.js?v=1" defer></script>
+  <script src="assets/js/booking-flow.js?v=2" defer></script>
 </head>
 <body class="audit-chapter diagnostic-chapter" data-audit-chapter>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="chapter-header">
     <nav class="container chapter-nav" aria-label="Audit navigation">
-      <a class="chapter-brand" href="index.html" aria-label="Mary Digi Solutions home"><img src="assets/images/logo-horizontal-transparent-optimized.png" width="780" height="323" alt="Mary Digi Solutions"></a>
+      <a class="chapter-brand" href="/" aria-label="Mary Digi Solutions home"><img src="assets/images/logo-horizontal-transparent-optimized.png" width="780" height="323" alt="Mary Digi Solutions"></a>
       <span class="chapter-breadcrumb">Real Estate <span aria-hidden="true">/</span> Lead System Audit</span>
-      <a class="chapter-overview" href="index.html#audit">Audit Overview <span aria-hidden="true">↗</span></a>
+      <a class="chapter-overview" href="/#audit">Audit Overview <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
   <main id="main" class="container chapter-main">
-    <ol class="chapter-progress" aria-label="Audit progress"><li class="is-complete"><span class="chapter-progress-number">01</span><span><strong>Contact Details</strong><small>Completed</small></span></li>
-<li class="is-current" aria-current="step"><span class="chapter-progress-number">02</span><span><strong>Lead Process</strong><small>Current</small></span></li>
-<li class=""><span class="chapter-progress-number">03</span><span><strong>Next Step</strong><small>Upcoming</small></span></li></ol>
+    <ol class="chapter-progress" aria-label="Audit progress" data-audit-progress>
+      <li class="is-complete"><span class="chapter-progress-number">01</span><span><strong>Contact Details</strong><small>Completed</small></span></li>
+      <li class="is-current" aria-current="step" data-progress-audit><span class="chapter-progress-number">02</span><span><strong>Lead Process</strong><small data-progress-audit-label>Current</small></span></li>
+      <li data-progress-booking><span class="chapter-progress-number">03</span><span><strong>Discovery Call</strong><small data-progress-booking-label>Upcoming</small></span></li>
+    </ol>
     <section class="diagnostic-intro" aria-labelledby="diagnostic-title">
       <div data-chapter-reveal>
         <p class="eyebrow">STEP 2 OF YOUR LEAD SYSTEM AUDIT</p>
@@ -59,9 +63,10 @@
         </ol>
         <p class="scene-footnote">The path we review, not a live reading of your answers.</p>
       </section>
-      <section class="diagnostic-form-container scene-form" aria-labelledby="form-title">
-        <p class="eyebrow">YOUR LEAD PROCESS</p>
-        <h2 id="form-title">A Few Details About Your Current Setup</h2>
+      <section class="diagnostic-form-container scene-form" aria-labelledby="form-title" data-audit-form-card>
+        <div data-audit-form-state>
+          <p class="eyebrow">YOUR LEAD PROCESS</p>
+          <h2 id="form-title">A Few Details About Your Current Setup</h2>
         <!-- GHL STEP 2 FORM EMBED START -->
           <div class="diagnostic-form-shell" data-ghl-form-shell>
             <iframe
@@ -83,21 +88,59 @@
               data-cookie-consent-provider="auto"
               title="MDS | Real Estate Lead Audit - Step 2">
             </iframe>
-            <script src="https://link.msgsndr.com/js/form_embed.js"></script>
           </div>
           <!-- GHL STEP 2 FORM EMBED END -->
-        <p class="diagnostic-reassurance">Your answers help us understand your current process before the next step.</p>
-        <nav class="chapter-legal" aria-label="Form privacy"><a href="https://marydigisolutions.com/privacy-policy.html">Privacy Policy</a><a href="https://marydigisolutions.com/terms-and-conditions.html">Terms of Service</a></nav>
+          <p class="diagnostic-reassurance">Your answers help us understand your current process before the next step.</p>
+        </div>
+
+        <div class="mds-audit-complete" data-audit-complete hidden>
+          <span class="mds-audit-complete__mark" aria-hidden="true">✓</span>
+          <p class="eyebrow">LEAD SYSTEM AUDIT COMPLETE</p>
+          <h2>Your Lead Process Details Are In.</h2>
+          <p>Your audit has been received. Choose a time for your discovery call and our team will review your responses before the meeting.</p>
+          <ul class="mds-audit-complete__meta" aria-label="Discovery call details">
+            <li>30 minutes</li><li>Google Meet</li><li>Calendar invite included</li>
+          </ul>
+          <button class="button" type="button" data-booking-open>Book My Discovery Call <span aria-hidden="true">↗</span></button>
+        </div>
       </section>
     </div>
   </main>
+  <!-- Discovery Call modal: shown after the Step 2 form completes. -->
+  <div class="mds-booking-modal" data-booking-modal aria-hidden="true">
+    <div class="mds-booking-modal__backdrop" data-booking-close aria-hidden="true"></div>
+    <section class="mds-booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mds-booking-title" aria-describedby="mds-booking-description" tabindex="-1">
+      <button class="mds-booking-modal__close" type="button" aria-label="Close booking calendar" data-booking-close>×</button>
+      <div class="mds-booking-modal__intro">
+        <p class="eyebrow">YOUR NEXT STEP</p>
+        <h2 id="mds-booking-title">Choose a Time for Your Discovery Call.</h2>
+        <p id="mds-booking-description">Your audit has been received. Select a time that works for you and we’ll review your answers before the call.</p>
+        <ul class="mds-booking-modal__facts" aria-label="Discovery call details">
+          <li><span>01</span>30-minute discovery call</li>
+          <li><span>02</span>Unique Google Meet link</li>
+          <li><span>03</span>Calendar invite after booking</li>
+        </ul>
+      </div>
+      <div class="mds-booking-modal__calendar">
+        <header class="mds-booking-modal__calendar-head">
+          <div><small>MDS REAL ESTATE DISCOVERY CALL</small><strong>Select your preferred date and time.</strong></div>
+          <p class="mds-booking-modal__notice">Available times are shown automatically.</p>
+        </header>
+        <div class="mds-booking-modal__embed">
+          <iframe src="https://api.leadconnectorhq.com/widget/booking/DH8Z9XycUL5sRi9xQo7W" allow="payment" style="width:100%;border:none;overflow:hidden;" scrolling="no" class="mds-booking-modal__frame" id="DH8Z9XycUL5sRi9xQo7W_1789365523901" title="MDS Real Estate Discovery Call"></iframe>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <footer class="chapter-footer">
     <div class="container chapter-footer-inner">
-      <a class="chapter-brand" href="index.html" aria-label="Mary Digi Solutions home"><img src="assets/images/logo-horizontal-transparent-optimized.png" width="780" height="323" alt="Mary Digi Solutions"></a>
+      <a class="chapter-brand" href="/" aria-label="Mary Digi Solutions home"><img src="assets/images/logo-horizontal-transparent-optimized.png" width="780" height="323" alt="Mary Digi Solutions"></a>
       <p>Mary Digi Solutions<br><span>Real Estate Lead Systems</span></p>
       <nav aria-label="Legal"><a href="https://marydigisolutions.com/privacy-policy.html">Privacy Policy</a><a href="https://marydigisolutions.com/terms-and-conditions.html">Terms of Service</a></nav>
       <button class="chapter-motion" type="button" aria-pressed="false" hidden>Reduce motion</button>
     </div>
   </footer>
+  <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+# UPLOAD FIRST — IMPORTANT
+
+The previous 404 happened because `form-1-complete.html` was configured in HighLevel before that file existed on the live GitHub Pages site.
+
+This revised package removes all bridge-page dependencies.
+
+Use these direct redirect URLs in HighLevel:
+
+- Form 1 → `https://realestate.marydigisolutions.com/step-2.html`
+- Form 2 → `https://realestate.marydigisolutions.com/step-2.html?audit=complete#book`
+- Discovery Call calendar → `https://realestate.marydigisolutions.com/thank-you.html`
+
+Upload this package to the GitHub Pages repository first, then set those GHL redirects.

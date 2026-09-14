@@ -1,0 +1,30 @@
+MDS REAL ESTATE FUNNEL — VERIFIED UPLOAD PACKAGE
+Generated: 2026-09-15
+
+Static QA completed:
+- index.html present
+- step-2.html present
+- thank-you.html present
+- Step 2 contains GHL Form 2 iframe: GpcWTTzFwcsi3RDNqexC
+- Step 2 contains Discovery Call iframe: DH8Z9XycUL5sRi9xQo7W
+- booking-flow.css and booking-flow.js are linked
+- no missing local CSS/JS/image references detected
+- no duplicate HTML IDs detected
+- JavaScript syntax check passed
+- legacy /real-estate/diagnostic/ and /real-estate/thank-you/ routes redirect to current root pages
+- no bridge pages are required
+
+GHL redirects:
+Form 1:
+https://realestate.marydigisolutions.com/step-2.html
+
+Form 2:
+https://realestate.marydigisolutions.com/step-2.html?audit=complete#book
+
+Calendar:
+https://realestate.marydigisolutions.com/thank-you.html
+
+Note:
+Static QA confirms the package structure and code references. HighLevel iframe, Sticky Contact,
+calendar availability, booking creation, Google Meet generation, and redirect behavior must still
+be verified with one live end-to-end test after deployment.

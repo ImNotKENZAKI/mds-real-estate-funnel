@@ -1,0 +1,231 @@
+/* MDS Real Estate Funnel — Discovery Call booking layer
+   Isolated from the existing landing + diagnostic animation styles. */
+
+body.mds-modal-open{overflow:hidden}
+
+.mds-audit-complete{
+  position:relative;
+  z-index:1;
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:12px 4px 8px;
+}
+.mds-audit-complete[hidden]{display:none!important}
+.mds-audit-complete__mark{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  margin-bottom:24px;
+  border:1px solid rgba(10,103,242,.24);
+  border-radius:50%;
+  background:linear-gradient(145deg,#fff,#eef5ff);
+  color:var(--blue,#0a67f2);
+  box-shadow:0 12px 30px rgba(7,21,47,.08);
+  font-size:20px;
+  font-weight:800;
+}
+.mds-audit-complete h2{max-width:620px;margin-bottom:18px;font-size:clamp(2rem,3vw,3.15rem)}
+.mds-audit-complete>p:not(.eyebrow){max-width:640px;color:var(--muted,#536174);font-size:15px;line-height:1.75}
+.mds-audit-complete__meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:12px 0 28px;
+  padding:0;
+  list-style:none;
+}
+.mds-audit-complete__meta li{
+  padding:8px 11px;
+  border:1px solid var(--line,rgba(7,21,47,.13));
+  border-radius:999px;
+  background:#fff;
+  color:var(--ink-2,#102342);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+
+/* Keep the modal in layout while hidden so the HighLevel embed can calculate
+   its width/height reliably. Visibility controls whether the user can reach it. */
+.mds-booking-modal{
+  position:fixed;
+  z-index:1000;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .26s ease,visibility 0s linear .26s;
+}
+.mds-booking-modal.is-open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transition:opacity .26s ease;
+}
+.mds-booking-modal__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(3,11,26,.76);
+  backdrop-filter:blur(14px);
+}
+.mds-booking-modal__dialog{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(280px,.76fr) minmax(480px,1.24fr);
+  width:min(1160px,calc(100vw - 40px));
+  max-height:calc(100dvh - 40px);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 38px 100px rgba(0,0,0,.36);
+  transform:translateY(14px) scale(.99);
+  transition:transform .34s cubic-bezier(.22,1,.36,1);
+}
+.mds-booking-modal.is-open .mds-booking-modal__dialog{transform:none}
+.mds-booking-modal__intro{
+  position:relative;
+  overflow:hidden;
+  padding:44px 38px;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(10,103,242,.22),transparent 21rem),
+    linear-gradient(155deg,#06142d,#0b2349 68%,#102d58);
+  color:#fff;
+}
+.mds-booking-modal__intro::after{
+  content:"";
+  position:absolute;
+  right:-110px;
+  bottom:-110px;
+  width:300px;
+  height:300px;
+  border:1px solid rgba(198,169,107,.18);
+  border-radius:50%;
+  box-shadow:0 0 0 54px rgba(198,169,107,.035),0 0 0 108px rgba(141,194,255,.025);
+  pointer-events:none;
+}
+.mds-booking-modal__intro .eyebrow{color:#91c1ff}
+.mds-booking-modal__intro h2{
+  position:relative;
+  z-index:1;
+  max-width:430px;
+  margin-bottom:18px;
+  color:#fff;
+  font-size:clamp(2.15rem,3.25vw,3.65rem);
+  font-weight:650;
+  line-height:1.02;
+}
+.mds-booking-modal__intro>p:not(.eyebrow){position:relative;z-index:1;max-width:440px;color:#d9e4f2;font-size:14px;line-height:1.72}
+.mds-booking-modal__facts{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:12px;
+  margin:30px 0 0;
+  padding:0;
+  list-style:none;
+  color:#eef5ff;
+  font-size:12px;
+  font-weight:700;
+}
+.mds-booking-modal__facts li{display:flex;align-items:center;gap:10px}
+.mds-booking-modal__facts span{
+  display:grid;
+  place-items:center;
+  width:28px;
+  height:28px;
+  border:1px solid rgba(145,193,255,.45);
+  border-radius:50%;
+  color:#e2c58d;
+  font-size:9px;
+  letter-spacing:.06em;
+}
+.mds-booking-modal__calendar{min-width:0;overflow:auto;background:#fff}
+.mds-booking-modal__calendar-head{
+  position:sticky;
+  z-index:2;
+  top:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:18px 64px 18px 22px;
+  border-bottom:1px solid rgba(7,21,47,.1);
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+}
+.mds-booking-modal__calendar-head small{display:block;margin-bottom:4px;color:#0a67f2;font-size:9px;font-weight:800;letter-spacing:.14em}
+.mds-booking-modal__calendar-head strong{display:block;color:#07152f;font-size:13px}
+.mds-booking-modal__notice{margin:0;color:#6b7685;font-size:10px;text-align:right}
+.mds-booking-modal__embed{min-height:650px;background:#fff}
+.mds-booking-modal__frame{
+  display:block;
+  width:100%;
+  min-height:650px;
+  border:0;
+  overflow:hidden;
+  background:#fff;
+}
+.mds-booking-modal__close{
+  position:absolute;
+  z-index:5;
+  top:14px;
+  right:14px;
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border:1px solid rgba(7,21,47,.12);
+  border-radius:50%;
+  background:#f7f5f0;
+  color:#07152f;
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+  transition:transform .25s ease,background .25s ease;
+}
+.mds-booking-modal__close:hover{transform:translateY(-1px);background:#fff}
+
+@media(max-width:900px){
+  .mds-booking-modal{padding:10px}
+  .mds-booking-modal__dialog{
+    grid-template-columns:1fr;
+    width:min(760px,calc(100vw - 20px));
+    max-height:calc(100dvh - 20px);
+    overflow:auto;
+  }
+  .mds-booking-modal__intro{padding:30px 24px 25px}
+  .mds-booking-modal__intro h2{max-width:620px;font-size:clamp(2rem,7vw,3.15rem)}
+  .mds-booking-modal__facts{grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px}
+  .mds-booking-modal__facts li{align-items:flex-start;font-size:10px}
+  .mds-booking-modal__calendar{overflow:visible}
+  .mds-booking-modal__calendar-head{position:relative;padding:15px 58px 15px 18px}
+  .mds-booking-modal__notice{display:none}
+  .mds-booking-modal__embed,.mds-booking-modal__frame{min-height:720px}
+}
+@media(max-width:560px){
+  .mds-booking-modal{padding:0;align-items:end}
+  .mds-booking-modal__dialog{
+    width:100%;
+    max-height:96dvh;
+    border-radius:18px 18px 0 0;
+    border-bottom:0;
+  }
+  .mds-booking-modal__intro{padding:28px 20px 22px}
+  .mds-booking-modal__intro h2{font-size:2rem}
+  .mds-booking-modal__facts{grid-template-columns:1fr}
+  .mds-booking-modal__calendar-head{align-items:flex-start}
+  .mds-booking-modal__embed,.mds-booking-modal__frame{min-height:760px}
+  .mds-audit-complete{min-height:440px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mds-booking-modal,.mds-booking-modal__dialog,.mds-booking-modal__close{transition:none!important}
+}
