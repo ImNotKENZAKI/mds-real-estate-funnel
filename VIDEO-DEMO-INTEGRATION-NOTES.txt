@@ -1,0 +1,23 @@
+MDS REAL ESTATE VIDEO DEMO INTEGRATION — 2026-09-15
+
+Video:
+https://youtu.be/64HUMVre1QM
+
+Placement:
+After the existing Property-to-Pipeline system section and before the Solutions section.
+
+Reason:
+The visitor first understands the problem and system, then sees a short visual demonstration before moving into detailed campaign examples. This keeps the video contextual instead of placing it too early in the hero.
+
+Implementation:
+- YouTube privacy-enhanced embed via youtube-nocookie.com
+- Lazy-loaded iframe
+- Responsive 16:9 frame
+- Existing reveal animation classes only; no new JavaScript added
+- Existing landing animations and GHL embeds untouched
+- CTA leads to the existing Free Lead System Audit
+
+Section copy:
+Eyebrow: See the system in motion
+Headline: From first click to a clearer next move.
+Body: A quick look at how Mary Digi Solutions connects lead capture, CRM context, automated follow-up, routing, and appointment booking into one coordinated real estate lead journey.

@@ -49,25 +49,18 @@ body.mds-modal-open{overflow:hidden}
   letter-spacing:.02em;
 }
 
-/* Keep the modal in layout while hidden so the HighLevel embed can calculate
-   its width/height reliably. Visibility controls whether the user can reach it. */
+/* Closed booking modal is removed from rendering completely.
+   This guarantees it cannot capture clicks over the Step 2 form. */
 .mds-booking-modal{
   position:fixed;
   z-index:1000;
   inset:0;
-  display:grid;
+  display:none;
   place-items:center;
   padding:20px;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:opacity .26s ease,visibility 0s linear .26s;
 }
 .mds-booking-modal.is-open{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-  transition:opacity .26s ease;
+  display:grid;
 }
 .mds-booking-modal__backdrop{
   position:absolute;

@@ -1,0 +1,24 @@
+MDS WIDGET ISOLATION FIX — 2026-09-15
+
+Confirmed diagnostic:
+- The direct HighLevel Step 2 form is clickable.
+- The same form intermittently becomes non-interactive only on the branded Step 2 page.
+- Therefore the form/custom-field configuration itself is not the root problem.
+
+This revision isolates HighLevel widgets:
+1. Normal /step-2.html activates ONLY the Step 2 form iframe.
+2. /step-2.html?audit=complete#book activates ONLY the Discovery Call calendar iframe.
+3. The calendar iframe has no active src while the form is live.
+4. form_embed.js is loaded dynamically only after the active widget is chosen.
+5. The closed calendar modal uses display:none, so it cannot intercept pointer input.
+6. Existing design and diagnostic animation are preserved.
+
+Test:
+A. https://realestate.marydigisolutions.com/step-2.html
+   - all dropdowns must click/open
+
+B. https://realestate.marydigisolutions.com/step-2.html?audit=complete#book
+   - calendar modal must open and calendar must work
+
+C. Full flow
+   Landing -> Form 1 -> Step 2 -> Form 2 -> Calendar -> Thank You

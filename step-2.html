@@ -11,9 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css?v=audit-chapters-4-interaction-fix">
   <link rel="stylesheet" href="assets/css/diagnostic-scene.css?v=2-interaction-fix">
-  <link rel="stylesheet" href="assets/css/booking-flow.css?v=3">
+  <link rel="stylesheet" href="assets/css/booking-flow.css?v=4-widget-isolation">
   <script src="assets/js/diagnostic-scene.js?v=1" defer></script>
-  <script src="assets/js/booking-flow.js?v=2" defer></script>
+  <script src="assets/js/booking-flow.js?v=4-widget-isolation" defer></script>
 </head>
 <body class="audit-chapter diagnostic-chapter" data-audit-chapter>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -70,7 +70,8 @@
         <!-- GHL STEP 2 FORM EMBED START -->
           <div class="diagnostic-form-shell" data-ghl-form-shell>
             <iframe
-              src="https://api.leadconnectorhq.com/widget/form/GpcWTTzFwcsi3RDNqexC"
+              data-widget-src="https://api.leadconnectorhq.com/widget/form/GpcWTTzFwcsi3RDNqexC"
+              data-ghl-widget="form"
               style="width:100%;height:var(--diagnostic-form-height,480px);border:none;border-radius:10px;pointer-events:auto"
               id="inline-GpcWTTzFwcsi3RDNqexC"
               data-layout="{'id':'INLINE'}"
@@ -127,7 +128,8 @@
           <p class="mds-booking-modal__notice">Available times are shown automatically.</p>
         </header>
         <div class="mds-booking-modal__embed">
-          <iframe src="https://api.leadconnectorhq.com/widget/booking/DH8Z9XycUL5sRi9xQo7W" allow="payment" style="width:100%;border:none;overflow:hidden;" scrolling="no" class="mds-booking-modal__frame" id="DH8Z9XycUL5sRi9xQo7W_1789365523901" title="MDS Real Estate Discovery Call"></iframe>
+          <iframe data-widget-src="https://api.leadconnectorhq.com/widget/booking/DH8Z9XycUL5sRi9xQo7W"
+                  data-ghl-widget="calendar" allow="payment" style="width:100%;border:none;overflow:hidden;" scrolling="no" class="mds-booking-modal__frame" id="DH8Z9XycUL5sRi9xQo7W_1789365523901" title="MDS Real Estate Discovery Call"></iframe>
         </div>
       </div>
     </section>
@@ -141,6 +143,5 @@
       <button class="chapter-motion" type="button" aria-pressed="false" hidden>Reduce motion</button>
     </div>
   </footer>
-  <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
   const params = new URLSearchParams(window.location.search);
   const auditComplete = params.get("audit") === "complete";
   const previewCalendar = params.get("preview") === "calendar";
+
   const modal = document.querySelector("[data-booking-modal]");
   const dialog = modal?.querySelector(".mds-booking-modal__dialog");
   const formState = document.querySelector("[data-audit-form-state]");
@@ -12,9 +13,58 @@
   const bookingProgress = document.querySelector("[data-progress-booking]");
   const auditLabel = document.querySelector("[data-progress-audit-label]");
   const bookingLabel = document.querySelector("[data-progress-booking-label]");
-  let lastFocused = null;
+  const formFrame = document.querySelector('iframe[data-ghl-widget="form"]');
+  const calendarFrame = document.querySelector('iframe[data-ghl-widget="calendar"]');
 
-  if (!modal || !dialog) return;
+  let lastFocused = null;
+  let embedScriptPromise = null;
+
+  function loadEmbedScript() {
+    if (window.__mdsGhlEmbedLoaded) return Promise.resolve();
+    if (embedScriptPromise) return embedScriptPromise;
+
+    embedScriptPromise = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-mds-ghl-embed]');
+      if (existing) {
+        if (window.__mdsGhlEmbedLoaded) {
+          resolve();
+          return;
+        }
+        existing.addEventListener("load", resolve, { once: true });
+        existing.addEventListener("error", reject, { once: true });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://link.msgsndr.com/js/form_embed.js";
+      script.type = "text/javascript";
+      script.dataset.mdsGhlEmbed = "true";
+      script.onload = () => {
+        window.__mdsGhlEmbedLoaded = true;
+        resolve();
+      };
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+
+    return embedScriptPromise;
+  }
+
+  async function activateWidget(frame) {
+    if (!frame || frame.dataset.widgetActive === "true") return;
+
+    const src = frame.dataset.widgetSrc;
+    if (!src) return;
+
+    frame.dataset.widgetActive = "true";
+    frame.src = src;
+
+    try {
+      await loadEmbedScript();
+    } catch (error) {
+      console.warn("MDS: HighLevel embed helper did not load.", error);
+    }
+  }
 
   function markAuditComplete() {
     if (formState) formState.hidden = true;
@@ -34,19 +84,28 @@
     if (bookingLabel) bookingLabel.textContent = "Current";
   }
 
-  function openBooking() {
+  async function openBooking() {
+    if (!modal || !dialog) return;
+
     lastFocused = document.activeElement;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("mds-modal-open");
+
+    await activateWidget(calendarFrame);
     window.setTimeout(() => dialog.focus(), 40);
   }
 
   function closeBooking() {
+    if (!modal) return;
+
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("mds-modal-open");
-    if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      lastFocused.focus();
+    }
   }
 
   document.addEventListener("click", event => {
@@ -55,11 +114,21 @@
   });
 
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && modal.classList.contains("is-open")) closeBooking();
+    if (event.key === "Escape" && modal?.classList.contains("is-open")) {
+      closeBooking();
+    }
   });
 
+  /*
+    Widget isolation:
+    - Normal Step 2 activates only the HighLevel form.
+    - Audit-complete mode activates only the Discovery Call calendar.
+    This avoids initializing a hidden calendar iframe while the Step 2 form is live.
+  */
   if (auditComplete || previewCalendar) {
     markAuditComplete();
     window.setTimeout(openBooking, 180);
+  } else {
+    activateWidget(formFrame);
   }
 })();
