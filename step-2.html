@@ -11,9 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css?v=audit-chapters-4-interaction-fix">
   <link rel="stylesheet" href="assets/css/diagnostic-scene.css?v=2-interaction-fix">
-  <link rel="stylesheet" href="assets/css/booking-flow.css?v=4-widget-isolation">
+  <link rel="stylesheet" href="assets/css/booking-flow.css?v=5-polish">
   <script src="assets/js/diagnostic-scene.js?v=1" defer></script>
-  <script src="assets/js/booking-flow.js?v=4-widget-isolation" defer></script>
+  <script src="assets/js/booking-flow.js?v=5-polish" defer></script>
 </head>
 <body class="audit-chapter diagnostic-chapter" data-audit-chapter>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -108,19 +108,21 @@
     </div>
   </main>
   <!-- Discovery Call modal: shown after the Step 2 form completes. -->
-  <div class="mds-booking-modal" data-booking-modal aria-hidden="true">
+  <div class="mds-booking-modal" data-booking-modal aria-hidden="true" hidden inert>
     <div class="mds-booking-modal__backdrop" data-booking-close aria-hidden="true"></div>
     <section class="mds-booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mds-booking-title" aria-describedby="mds-booking-description" tabindex="-1">
       <button class="mds-booking-modal__close" type="button" aria-label="Close booking calendar" data-booking-close>×</button>
+      <div class="mds-booking-modal__body">
       <div class="mds-booking-modal__intro">
-        <p class="eyebrow">YOUR NEXT STEP</p>
+        <p class="eyebrow">AUDIT COMPLETE</p>
         <h2 id="mds-booking-title">Choose a Time for Your Discovery Call.</h2>
-        <p id="mds-booking-description">Your audit has been received. Select a time that works for you and we’ll review your answers before the call.</p>
-        <ul class="mds-booking-modal__facts" aria-label="Discovery call details">
-          <li><span>01</span>30-minute discovery call</li>
-          <li><span>02</span>Unique Google Meet link</li>
-          <li><span>03</span>Calendar invite after booking</li>
+        <p id="mds-booking-description">Your Lead System Audit is in. Choose a time that works for you and our team will review your responses before the call.</p>
+        <ul class="mds-booking-modal__path" aria-label="Audit to discovery call">
+          <li>AUDIT RECEIVED</li>
+          <li>MDS REVIEW</li>
+          <li>DISCOVERY CALL</li>
         </ul>
+        <p class="mds-booking-modal__utility">30 MINUTES · GOOGLE MEET · CALENDAR INVITE INCLUDED</p>
       </div>
       <div class="mds-booking-modal__calendar">
         <header class="mds-booking-modal__calendar-head">
@@ -128,9 +130,12 @@
           <p class="mds-booking-modal__notice">Available times are shown automatically.</p>
         </header>
         <div class="mds-booking-modal__embed">
+          <template data-calendar-template>
           <iframe data-widget-src="https://api.leadconnectorhq.com/widget/booking/DH8Z9XycUL5sRi9xQo7W"
                   data-ghl-widget="calendar" allow="payment" style="width:100%;border:none;overflow:hidden;" scrolling="no" class="mds-booking-modal__frame" id="DH8Z9XycUL5sRi9xQo7W_1789365523901" title="MDS Real Estate Discovery Call"></iframe>
+          </template>
         </div>
+      </div>
       </div>
     </section>
   </div>

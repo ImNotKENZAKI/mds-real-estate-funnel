@@ -31,6 +31,64 @@
   let timer = 0;
   let inViewport = false;
   let watchMode = false;
+  let savedScroll = null;
+  let pendingWatch = false;
+  let loadTimer = 0;
+  let inertElements = [];
+  const viewer = section.querySelector('[data-video-viewer]');
+  const feedback = section.querySelector('[data-video-feedback]');
+  const playerControls = [playToggle, muteButton, scrub].filter(Boolean);
+  playerControls.forEach(control => { control.disabled = true; });
+
+  function message(text) {
+    if (status) status.textContent = text;
+    if (feedback) feedback.textContent = text;
+  }
+
+  function lockScroll() {
+    const body = document.body;
+    const root = document.documentElement;
+    savedScroll = { x: scrollX, y: scrollY, body: body.getAttribute('style'), root: root.getAttribute('style') };
+    const gutter = innerWidth - root.clientWidth;
+    root.style.overflow = 'hidden';
+    root.style.scrollBehavior = 'auto';
+    body.style.position = 'fixed';
+    body.style.top = `-${savedScroll.y}px`;
+    body.style.left = `-${savedScroll.x}px`;
+    body.style.width = '100%';
+    body.style.overflow = 'hidden';
+    if (gutter) body.style.paddingRight = `${parseFloat(getComputedStyle(body).paddingRight) + gutter}px`;
+    // Make only the viewing controls reachable, without reparenting/reloading YouTube.
+    let branch = section;
+    while (branch.parentElement) {
+      for (const sibling of branch.parentElement.children) {
+        if (sibling !== branch && !sibling.inert && !['SCRIPT', 'STYLE', 'LINK'].includes(sibling.tagName)) {
+          sibling.inert = true;
+          inertElements.push(sibling);
+        }
+      }
+      if (branch.parentElement === body) break;
+      branch = branch.parentElement;
+    }
+    section.querySelector('[data-cinematic-copy]').inert = true;
+    watchButton.inert = true;
+  }
+
+  function unlockScroll() {
+    if (!savedScroll) return;
+    const saved = savedScroll;
+    savedScroll = null;
+    for (const element of inertElements) element.inert = false;
+    inertElements = [];
+    section.querySelector('[data-cinematic-copy]').inert = false;
+    watchButton.inert = false;
+    if (saved.body === null) document.body.removeAttribute('style');
+    else document.body.setAttribute('style', saved.body);
+    // Restore the position before restoring a possible smooth-scroll preference.
+    window.scrollTo({ left: saved.x, top: saved.y, behavior: 'instant' });
+    if (saved.root === null) document.documentElement.removeAttribute('style');
+    else document.documentElement.setAttribute('style', saved.root);
+  }
 
   function formatTime(seconds) {
     const value = Math.max(0, Number(seconds) || 0);
@@ -49,9 +107,15 @@
 
   function renderScrollStory() {
     raf = 0;
+    const rect = section.getBoundingClientRect();
+    // The mobile audit CTA is useful between sections, but must not sit over
+    // the story's own Watch control or the full-screen film controls.
+    document.body.classList.toggle(
+      "cinematic-story-in-view",
+      rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18
+    );
     if (watchMode || reduceMotion.matches) return;
 
-    const rect = section.getBoundingClientRect();
     const scrollable = Math.max(1, section.offsetHeight - window.innerHeight);
     const traveled = Math.min(scrollable, Math.max(0, -rect.top));
     const progress = Math.min(1, Math.max(0, traveled / scrollable));
@@ -80,16 +144,17 @@
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
     script.async = true;
+    script.onerror = () => message('The film could not load. Open it on YouTube or return to the story.');
     document.head.appendChild(script);
   }
 
-  function requestPlayer() {
-    if (playerRequested || reduceMotion.matches || !iframe) return;
+  function requestPlayer(explicitPlay = false) {
+    if (playerRequested || (reduceMotion.matches && !explicitPlay) || !iframe) return;
     playerRequested = true;
 
     const params = new URLSearchParams({
       enablejsapi: "1",
-      autoplay: "1",
+      autoplay: reduceMotion.matches ? "0" : "1",
       mute: "1",
       controls: "0",
       rel: "0",
@@ -100,6 +165,7 @@
       fs: "0",
       iv_load_policy: "3"
     });
+    if (location.protocol !== 'file:') params.set('origin', location.origin);
     iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
     loadYouTubeAPI();
   }
@@ -110,22 +176,30 @@
       events: {
         onReady: () => {
           playerReady = true;
-          section.classList.add("is-video-ready");
+          playerControls.forEach(control => { control.disabled = false; });
           try {
             player.mute();
-            if (inViewport) player.playVideo();
+            if (pendingWatch && watchMode) beginWatchPlayback();
+            else if (inViewport && !reduceMotion.matches) player.playVideo();
+            else player.pauseVideo();
           } catch (_) {}
           updatePlayerUI();
         },
         onStateChange: event => {
           if (!window.YT) return;
           const playing = event.data === window.YT.PlayerState.PLAYING;
+          if (playing) {
+            section.classList.add('is-video-ready');
+            if (watchMode) { clearTimeout(loadTimer); message(''); }
+          }
           if (playIcon) playIcon.textContent = playing ? "Ⅱ" : "▶";
           if (playToggle) playToggle.setAttribute("aria-label", playing ? "Pause video" : "Play video");
           if (event.data === window.YT.PlayerState.ENDED && !watchMode) {
             try { player.seekTo(0, true); player.playVideo(); } catch (_) {}
           }
-        }
+        },
+        onError: () => { clearTimeout(loadTimer); message('The film is unavailable here. Open it on YouTube or return to the story.'); },
+        onAutoplayBlocked: () => { if (watchMode) message('Press Play to start the film. Your browser paused playback.'); }
       }
     });
   }
@@ -158,47 +232,71 @@
     timer = 0;
   }
 
-  function enterWatchMode() {
-    watchMode = true;
-    section.classList.add("is-watch-mode");
-    document.body.classList.add("cinematic-watch-open");
-    section.querySelector("[data-video-viewer]")?.setAttribute("aria-hidden", "false");
-    if (modeLabel) modeLabel.textContent = "WATCHING WITH SOUND";
-
-    requestPlayer();
-    const begin = () => {
-      if (!playerReady || !player) {
-        window.setTimeout(begin, 120);
-        return;
-      }
-      try {
-        player.seekTo(0, true);
-        player.unMute();
-        player.playVideo();
-      } catch (_) {}
-      updatePlayerUI();
-      startUITimer();
-      status && (status.textContent = "System film opened with sound.");
-      closeButton?.focus();
-    };
-    begin();
+  function beginWatchPlayback() {
+    if (!watchMode || !playerReady || !player || !pendingWatch) return;
+    pendingWatch = false;
+    try {
+      player.seekTo(0, true);
+      player.unMute();
+      player.playVideo();
+    } catch (_) { message('Press Play to start the film.'); }
+    updatePlayerUI();
+    startUITimer();
   }
 
+  function enterWatchMode() {
+    if (watchMode) return;
+    watchMode = true;
+    pendingWatch = true;
+    lockScroll();
+    section.classList.add("is-watch-mode");
+    document.body.classList.add("cinematic-watch-open");
+    viewer.setAttribute('aria-hidden', 'false');
+    viewer.setAttribute('role', 'dialog');
+    viewer.setAttribute('aria-modal', 'true');
+    viewer.setAttribute('aria-label', 'MDS Real Estate system film');
+    if (modeLabel) modeLabel.textContent = "WATCHING WITH SOUND";
+
+    message(playerReady ? '' : 'Loading the system film…');
+    window.requestAnimationFrame(() => {
+      if (watchMode) closeButton?.focus({ preventScroll: true });
+    });
+    loadTimer = window.setTimeout(() => {
+      if (watchMode) message('Playback is taking longer than expected. Open on YouTube or return to the story.');
+    }, 15000);
+    requestPlayer(true);
+    beginWatchPlayback();
+  }
+
+  // Visibility is animated for a softer handoff, so also focus once the
+  // viewer has actually faded in. The guard avoids stealing focus from a
+  // viewer control the user may already be using.
+  viewer?.addEventListener("transitionend", event => {
+    if (event.propertyName !== "opacity" || !watchMode || viewer.contains(document.activeElement)) return;
+    closeButton?.focus({ preventScroll: true });
+  });
+
   function exitWatchMode() {
+    if (!watchMode) return;
     watchMode = false;
+    pendingWatch = false;
+    clearTimeout(loadTimer);
     section.classList.remove("is-watch-mode");
     document.body.classList.remove("cinematic-watch-open");
-    section.querySelector("[data-video-viewer]")?.setAttribute("aria-hidden", "true");
+    viewer.setAttribute('aria-hidden', 'true');
+    viewer.removeAttribute('aria-modal');
     if (modeLabel) modeLabel.textContent = "LIVE SYSTEM FILM";
     stopUITimer();
     if (playerReady && player) {
       try {
         player.mute();
-        if (inViewport) player.playVideo();
+        if (inViewport && !reduceMotion.matches) player.playVideo();
+        else player.pauseVideo();
       } catch (_) {}
     }
     status && (status.textContent = "Returned to the scroll story. Video muted.");
-    watchButton?.focus();
+    unlockScroll();
+    watchButton?.focus({ preventScroll: true });
     requestStoryRender();
   }
 
@@ -206,7 +304,7 @@
   closeButton?.addEventListener("click", exitWatchMode);
 
   playToggle?.addEventListener("click", () => {
-    if (!playerReady || !player || !window.YT) return;
+    if (!watchMode || !playerReady || !player || !window.YT) return;
     try {
       const state = player.getPlayerState();
       if (state === window.YT.PlayerState.PLAYING) player.pauseVideo();
@@ -215,7 +313,7 @@
   });
 
   muteButton?.addEventListener("click", () => {
-    if (!playerReady || !player) return;
+    if (!watchMode || !playerReady || !player) return;
     try {
       if (player.isMuted()) player.unMute();
       else player.mute();
@@ -234,9 +332,28 @@
     updatePlayerUI();
   });
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && watchMode) exitWatchMode();
-  });
+  document.addEventListener('keydown', event => {
+    if (!watchMode) return;
+    if (event.key === 'Escape') { event.preventDefault(); exitWatchMode(); return; }
+    if (event.key === 'Tab') {
+      const controls = [...viewer.querySelectorAll('button:not(:disabled), a[href]')];
+      const first = controls[0], last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
+      event.stopImmediatePropagation();
+      if (event.key !== ' ' || document.activeElement?.tagName !== 'BUTTON') event.preventDefault();
+    }
+  }, true);
+  // Keep the separate hero wheel handler dormant while the body is position-locked.
+  window.addEventListener('wheel', event => {
+    if (watchMode && !event.ctrlKey) { event.preventDefault(); event.stopImmediatePropagation(); }
+  }, { capture: true, passive: false });
+  window.addEventListener('touchmove', event => {
+    if (watchMode && event.touches.length === 1) { event.preventDefault(); event.stopImmediatePropagation(); }
+  }, { capture: true, passive: false });
+  window.addEventListener('pagehide', () => { if (watchMode) exitWatchMode(); });
 
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
@@ -245,7 +362,7 @@
         inViewport = entry.isIntersecting;
         if (inViewport) {
           requestPlayer();
-          if (playerReady && !watchMode) {
+          if (playerReady && !watchMode && !reduceMotion.matches) {
             try { player.mute(); player.playVideo(); } catch (_) {}
           }
         } else if (playerReady && !watchMode) {
@@ -263,6 +380,7 @@
   window.addEventListener("resize", requestStoryRender);
   reduceMotion.addEventListener?.("change", () => {
     if (!reduceMotion.matches) requestPlayer();
+    else if (playerReady && !watchMode) { player.mute(); player.pauseVideo(); }
     requestStoryRender();
   });
 

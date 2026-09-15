@@ -14,10 +14,12 @@
   const auditLabel = document.querySelector("[data-progress-audit-label]");
   const bookingLabel = document.querySelector("[data-progress-booking-label]");
   const formFrame = document.querySelector('iframe[data-ghl-widget="form"]');
-  const calendarFrame = document.querySelector('iframe[data-ghl-widget="calendar"]');
+  const calendarTemplate = document.querySelector('[data-calendar-template]');
+  const calendarFrame = calendarTemplate?.content.querySelector('iframe[data-ghl-widget="calendar"]');
 
   let lastFocused = null;
   let embedScriptPromise = null;
+  let modalBackground = [];
 
   function loadEmbedScript() {
     if (window.__mdsGhlEmbedLoaded) return Promise.resolve();
@@ -85,26 +87,40 @@
   }
 
   async function openBooking() {
-    if (!modal || !dialog) return;
+    if (!modal || !dialog || modal.classList.contains('is-open')) return;
 
     lastFocused = document.activeElement;
+    modal.hidden = false;
+    modal.inert = false;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("mds-modal-open");
-
+    document.documentElement.classList.add('mds-modal-open');
+    for (const element of document.body.children) {
+      if (element !== modal && !element.inert && !['SCRIPT','STYLE','LINK'].includes(element.tagName)) {
+        element.inert = true;
+        modalBackground.push(element);
+      }
+    }
+    modal.querySelector('[data-booking-close].mds-booking-modal__close')?.focus({ preventScroll: true });
+    if (calendarFrame && !calendarFrame.isConnected) calendarTemplate.replaceWith(calendarFrame);
     await activateWidget(calendarFrame);
-    window.setTimeout(() => dialog.focus(), 40);
   }
 
   function closeBooking() {
     if (!modal) return;
 
     modal.classList.remove("is-open");
+    modal.hidden = true;
+    modal.inert = true;
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("mds-modal-open");
+    document.documentElement.classList.remove('mds-modal-open');
+    modalBackground.forEach(element => { element.inert = false; });
+    modalBackground = [];
 
     if (lastFocused && typeof lastFocused.focus === "function") {
-      lastFocused.focus();
+      lastFocused.focus({ preventScroll: true });
     }
   }
 
@@ -126,6 +142,8 @@
     This avoids initializing a hidden calendar iframe while the Step 2 form is live.
   */
   if (auditComplete || previewCalendar) {
+    // An inactive form must not be discovered by the official helper in booking mode.
+    formFrame?.remove();
     markAuditComplete();
     window.setTimeout(openBooking, 180);
   } else {
