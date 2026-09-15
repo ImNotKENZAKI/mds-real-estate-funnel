@@ -1,0 +1,22 @@
+MDS CINEMATIC VIDEO STORY — 2026-09-15
+
+Placement
+---------
+Between the Property-to-Pipeline system section and Solutions.
+
+Behavior
+--------
+- Sticky full-screen video story.
+- YouTube video 64HUMVre1QM lazy-loads as a muted looping background.
+- Four editorial story beats change with scroll.
+- Watch with Sound opens an immersive 16:9 presentation mode, restarts the film, unmutes it, and hides story text.
+- Custom play/pause, sound and scrub controls.
+- Return to Story restores muted background mode at the same page position.
+- Escape closes immersive playback.
+- Reduced-motion users get a static final message instead of a long scroll sequence.
+
+Design constraints
+------------------
+- No chapter pills, generic cards, Lucide icons, or template-style glass UI.
+- Uses the MDS signal-line language, navy/gold/blue palette and editorial typography.
+- Existing hero, system animation, forms, Step 2 and calendar logic were not redesigned.

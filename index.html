@@ -11,8 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=video-demo-1">
+  <link rel="stylesheet" href="assets/css/style.css?v=9.0">
   <script src="assets/js/main.js?v=8.1" defer></script>
+  <link rel="stylesheet" href="assets/css/video-story.css?v=1.0">
+  <script src="assets/js/video-story.js?v=1.0" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -182,63 +184,93 @@
       </div>
     </section>
 
-
-    <section class="demo section" id="demo" aria-labelledby="demo-title">
-      <div class="container demo__shell">
-        <div class="demo__copy reveal reveal--left">
-          <p class="eyebrow eyebrow--dark">See the system in motion</p>
-          <h2 id="demo-title">From first click to a clearer next move.</h2>
-          <p class="demo__lede">A quick look at how Mary Digi Solutions connects lead capture, CRM context, automated follow-up, routing, and appointment booking into one coordinated real estate lead journey.</p>
-
-          <div class="demo__proof" aria-label="What the demo covers">
-            <div>
-              <span>01</span>
-              <p><strong>Capture the context</strong><small>Keep the source, contact, and inquiry details together.</small></p>
-            </div>
-            <div>
-              <span>02</span>
-              <p><strong>Carry the follow-up forward</strong><small>Give the team a visible owner, next action, and cleaner handoff.</small></p>
-            </div>
-            <div>
-              <span>03</span>
-              <p><strong>Make the next step easier</strong><small>Move qualified inquiries toward the right conversation and booking path.</small></p>
-            </div>
-          </div>
-
-          <a class="text-link demo__link" href="#audit">
-            Review my lead system
-            <span aria-hidden="true">↗</span>
-          </a>
+    <section class="cinematic-story" id="demo" aria-labelledby="cinematic-story-title" data-cinematic-story data-active-beat="0">
+      <div class="cinematic-story__stage" data-cinematic-stage>
+        <div class="cinematic-story__media" data-cinematic-media>
+          <div class="cinematic-story__poster" aria-hidden="true"></div>
+          <iframe
+            class="cinematic-story__player"
+            data-cinematic-player
+            data-video-id="64HUMVre1QM"
+            title="Mary Digi Solutions Real Estate Lead System overview"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            tabindex="-1"></iframe>
+          <div class="cinematic-story__wash" aria-hidden="true"></div>
+          <div class="cinematic-story__grain" aria-hidden="true"></div>
         </div>
 
-        <figure class="demo__stage reveal reveal--right">
-          <div class="demo__frame">
-            <div class="demo__frame-head" aria-hidden="true">
-              <span>MDS / REAL ESTATE</span>
-              <span>30-SECOND SYSTEM OVERVIEW</span>
+        <div class="cinematic-story__chrome" aria-hidden="true">
+          <span>MDS / REAL ESTATE LEAD SYSTEMS</span>
+          <span data-video-mode-label>LIVE SYSTEM FILM</span>
+        </div>
+
+        <div class="cinematic-story__story" data-cinematic-copy>
+          <article class="cinematic-story__beat cinematic-story__beat--left is-active" data-story-beat="0">
+            <p class="cinematic-story__eyebrow"><span></span> The inquiry</p>
+            <h2 id="cinematic-story-title">Real estate leads move fast.</h2>
+            <p>A new inquiry should enter a system that already knows the next move.</p>
+            <div class="cinematic-story__telemetry" aria-hidden="true">
+              <small>NEW INQUIRY</small><strong>Property interest captured</strong>
             </div>
-            <div class="demo__video">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/64HUMVre1QM?rel=0&modestbranding=1&playsinline=1"
-                title="Mary Digi Solutions Real Estate Lead System overview"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
+          </article>
+
+          <article class="cinematic-story__beat cinematic-story__beat--right" data-story-beat="1">
+            <p class="cinematic-story__eyebrow"><span></span> The handoff</p>
+            <h2>Every inquiry should know where it goes next.</h2>
+            <p>Source, contact context, and ownership stay together instead of disappearing between tools.</p>
+            <div class="cinematic-story__telemetry" aria-hidden="true">
+              <small>CRM CONTEXT</small><strong>Owner + source attached</strong>
             </div>
-            <div class="demo__frame-foot">
-              <span>Capture</span>
-              <i aria-hidden="true"></i>
-              <span>CRM</span>
-              <i aria-hidden="true"></i>
-              <span>Follow-Up</span>
-              <i aria-hidden="true"></i>
-              <span>Book</span>
+          </article>
+
+          <article class="cinematic-story__beat cinematic-story__beat--left cinematic-story__beat--lower" data-story-beat="2">
+            <p class="cinematic-story__eyebrow"><span></span> The follow-up</p>
+            <h2>Follow-up becomes a system, not a memory.</h2>
+            <p>Response, qualification, and routing move forward while your team stays focused on the conversation.</p>
+            <div class="cinematic-story__telemetry" aria-hidden="true">
+              <small>AUTOMATION</small><strong>Follow-up triggered</strong>
             </div>
+          </article>
+
+          <article class="cinematic-story__beat cinematic-story__beat--center" data-story-beat="3">
+            <p class="cinematic-story__eyebrow"><span></span> The next move</p>
+            <h2>Turn property interest into a connected pipeline.</h2>
+            <p>From first click to the right conversation, every step has a clearer next move.</p>
+            <a class="cinematic-story__cta" href="#audit">Get My Free Lead System Audit <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+
+        <div class="cinematic-story__signal" aria-hidden="true">
+          <div class="cinematic-story__signal-track"><i data-story-progress></i><b data-story-dot></b></div>
+          <div class="cinematic-story__signal-labels">
+            <span>Capture</span><span>Context</span><span>Follow-Up</span><span>Book</span>
           </div>
-          <figcaption>See how the pieces work together before we review your current setup.</figcaption>
-        </figure>
+        </div>
+
+        <button class="cinematic-story__watch" type="button" data-video-watch aria-label="Watch the system film with sound">
+          <span class="cinematic-story__watch-mark" aria-hidden="true"><i></i></span>
+          <span><small>30-second system film</small><strong>Watch with sound</strong></span>
+          <em aria-hidden="true">↗</em>
+        </button>
+
+        <div class="cinematic-story__viewer" data-video-viewer aria-hidden="true">
+          <div class="cinematic-story__viewer-head">
+            <div><small>MDS / REAL ESTATE</small><strong>Connected Lead System</strong></div>
+            <button type="button" data-video-close aria-label="Return to the scroll story">Return to story <span aria-hidden="true">×</span></button>
+          </div>
+          <div class="cinematic-story__controls" data-video-controls>
+            <button type="button" class="cinematic-story__control" data-video-toggle aria-label="Pause video"><span data-video-toggle-icon>Ⅱ</span></button>
+            <span class="cinematic-story__time" data-video-current>0:00</span>
+            <button type="button" class="cinematic-story__scrub" data-video-scrub aria-label="Seek through video"><i data-video-buffer></i><b data-video-played></b><span data-video-handle></span></button>
+            <span class="cinematic-story__time" data-video-duration>0:30</span>
+            <button type="button" class="cinematic-story__control cinematic-story__sound" data-video-mute aria-label="Mute video"><span data-video-sound-icon>Sound on</span></button>
+          </div>
+        </div>
+
+        <p class="cinematic-story__hint" data-story-hint>Scroll to follow the system <span aria-hidden="true">↓</span></p>
+        <span class="sr-only" aria-live="polite" data-video-status></span>
       </div>
     </section>
 
